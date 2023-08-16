@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Rules</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          background-color: white;
+        }
+
+        h1 {
+          margin: 20px 0 10px 40px;
+        }
+
+        #searchContainer {
+          display: flex;
+          align-items: center;
+          margin: 10px 40px;
+        }
+
+        #searchInput {
+          padding: 4px;
+          border: 1px solid #ccc;
+          border-radius: 2px;
+          margin-left: 10px;
+        }
+
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          background-color: white;
+        }
+
+        th, td {
+          padding: 10px 40px;
+          text-align: left;
+          border-bottom: 1px dashed lightgrey;
+        }
+
+        th {
+          cursor: pointer;
+        }
+
+        .visited-link {
+          color: #800080;
+          text-decoration: none;
+        }
+
+        .file-name {
+          color: #006ed3;
+          text-decoration: none;
+          cursor: pointer;
+        }
+
+        .file-icon {
+          width: 16px;
+          height: 16px;
+          margin-right: 5px;
+          fill: black;
+        }
+
+        tbody tr:hover {
+          background-color: #ffffe0;
+        }
+    </style>
+</head>
+<body>
+<h1>Network Rules</h1>
+<div id="searchContainer">
+    <div>Total Files: <span id="fileCount">0</span></div>
+    <input type="text" id="searchInput" placeholder=" 输入文件名搜索">
+</div>
+<table id="fileTable">
+    <thead>
+    <tr>
+        <th onclick="sortTable(0)">Name</th>
+        <th onclick="sortTable(1)">Size</th>
+        <th onclick="sortTable(2)">Modified</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody">
+    </tbody>
+</table>
+
+<script src="./fileList.js"></script>
+<script>
+    const fileCount = document.getElementById('fileCount');
+    const tableBody = document.getElementById('tableBody');
+
+    function displayData(data) {
+      tableBody.innerHTML = '';
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        const visitedClass = item.visited ? 'visited-link' : '';
+        row.innerHTML = `
+          <td>
+            <svg class="file-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="1" width="12" height="14" rx="2" fill="black"/> <!-- Change to black -->
+              <path d="M2 5.5H14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M2 8H14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M2 10.5H6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <a href="https://cdn.jsdelivr.net/gh/xuhuanxxx/network-rules@release/${item.name}" class="file-name ${visitedClass}" onclick="markVisited(this);">
+              ${item.name}
+            </a>
+          </td>
+          <td>${item.size}</td>
+          <td>${convertToUTC8(item.modified)}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+      fileCount.textContent = data.length;
+    }
+
+    function markVisited(link) {
+      link.classList.add('visited-link');
+    }
+
+    function convertToUTC8(isoDate) {
+      const date = new Date(isoDate);
+      const utc8Date = new Date(date.getTime() + (8 * 60 * 60 * 1000)); // Adding 8 hours in milliseconds for UTC+8
+      return utc8Date.toISOString().split('T')[0] + ' ' + utc8Date.toISOString().split('T')[1].substring(0, 8);
+    }
+
+    displayData(fileData);
+
+    function sortTable(column) {
+      const sortOrder = ['asc', 'desc'];
+      const currentOrder = tableBody.getAttribute('data-order') || 'asc';
+      const nextOrder = sortOrder[(sortOrder.indexOf(currentOrder) + 1) % 2];
+      tableBody.setAttribute('data-order', nextOrder);
+
+      const sortedData = fileData.slice().sort((a, b) => {
+        if (column === 0) {
+          return a.name.localeCompare(b.name) * (nextOrder === 'asc' ? 1 : -1);
+        } else if (column === 1) {
+          return (a.size - b.size) * (nextOrder === 'asc' ? 1 : -1);
+        } else if (column === 2) {
+          return a.modified.localeCompare(b.modified) * (nextOrder === 'asc' ? 1 : -1);
+        }
+      });
+
+      displayData(sortedData);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const searchValue = this.value.toLowerCase();
+      const filteredData = fileData.filter(item => item.name.toLowerCase().split('.')[0].includes(searchValue));
+      displayData(filteredData);
+    });
+</script>
+</body>
+</html>
