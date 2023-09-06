@@ -73,7 +73,7 @@ jobs:
 
           for file in release/*.txt; do
             fileName=$(basename $file)
-            fileLines=$(grep -vE '^\s*#|^$' your_file.txt | wc -l)
+            fileLines=$(grep -vE '^\s*#|^$' $file | wc -l)
 
             echo "{ name: '$fileName', modified: '$(date -u -r $file --iso-8601=seconds)', lines: $fileLines }," >> src/fileList.js
           done
