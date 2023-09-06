@@ -81,7 +81,7 @@
     <thead>
     <tr>
         <th onclick="sortTable(0)">Name</th>
-        <th onclick="sortTable(1)">Size</th>
+        <th onclick="sortTable(1)">Lines</th>
         <th onclick="sortTable(2)">Modified</th>
     </tr>
     </thead>
@@ -111,7 +111,7 @@
               ${item.name}
             </a>
           </td>
-          <td>${item.size}</td>
+          <td>${item.lines}</td>
           <td>${convertToUTC8(item.modified)}</td>
         `;
         tableBody.appendChild(row);
@@ -141,7 +141,7 @@
         if (column === 0) {
           return a.name.localeCompare(b.name) * (nextOrder === 'asc' ? 1 : -1);
         } else if (column === 1) {
-          return (a.size - b.size) * (nextOrder === 'asc' ? 1 : -1);
+          return (a.lines - b.lines) * (nextOrder === 'asc' ? 1 : -1);
         } else if (column === 2) {
           return a.modified.localeCompare(b.modified) * (nextOrder === 'asc' ? 1 : -1);
         }

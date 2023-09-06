@@ -73,9 +73,9 @@ jobs:
 
           for file in release/*.txt; do
             fileName=$(basename $file)
-            fileSize=$(du -b $file | awk '{print $1}')
+            fileLines=$(grep -vE '^\s*#|^$' your_file.txt | wc -l)
 
-            echo "{ name: '$fileName', modified: '$(date -u -r $file --iso-8601=seconds)', size: $fileSize }," >> src/fileList.js
+            echo "{ name: '$fileName', modified: '$(date -u -r $file --iso-8601=seconds)', lines: $fileLines }," >> src/fileList.js
           done
 
           echo "];" >> src/fileList.js
