@@ -104,7 +104,7 @@ class DocumentProcessor:
                             result = page
                         page_file = release_dir / f"{name}{attr}.txt"
                         with page_file.open("w") as file:
-                            file.write(f"# 来源: https://github.com/v2fly/domain-list-community/{name}\n\n")
+                            file.write(f"# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/{name}\n\n")
                             file.writelines(page)
                     processed.update({name: result})
                     info = "🆗处理完成"
