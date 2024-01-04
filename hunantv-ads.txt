@@ -1,0 +1,9 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/hunantv-ads
+
+.click.hunantv.com
+.da.hunantv.com
+.da.mgtv.com
+.log.hunantv.com
+.log.v2.hunantv.com
+.res.hunantv.com
+.v2.log.hunantv.com

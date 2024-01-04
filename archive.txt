@@ -1,0 +1,7 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/archive
+
+.archive-it.org
+.archive.org
+.archive.ph
+.archive.today
+.openlibrary.org

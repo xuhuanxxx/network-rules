@@ -1,0 +1,7 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/stripe
+
+.link.com
+.stripe-terminal-local-reader.net
+.stripe.com
+.stripe.network
+.stripecdn.com

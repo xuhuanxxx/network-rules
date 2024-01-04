@@ -1,0 +1,9 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/sb
+
+.dns.sb
+.ip.sb
+.loli.net
+.sb.sb
+.sm.ms
+.u.nu
+.www.sb

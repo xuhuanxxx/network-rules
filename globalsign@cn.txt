@@ -1,0 +1,9 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/globalsign
+
+crl.alphassl.com
+crl2.alphassl.com
+global.prd.cdn.globalsign.com
+ocsp.globalsign.com
+ocsp2.globalsign.com
+secure.globalsign.com
+secure2.alphassl.com
