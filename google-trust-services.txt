@@ -1,0 +1,9 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/google-trust-services
+
+.pki.goog
+clients1.google.com
+crl.pki.goog
+crls.pki.goog
+ocsp.pki.goog
+pki-goog.l.google.com
+pki.google.com

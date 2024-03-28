@@ -1,0 +1,6 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/creativecommons
+
+.ccstatic.org
+.creativecommons.engineering
+.creativecommons.org
+.licensebuttons.net
