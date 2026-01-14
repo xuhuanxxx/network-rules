@@ -107,12 +107,12 @@
               <path d="M2 8H14" stroke="white" stroke-width="2" stroke-linecap="round"/>
               <path d="M2 10.5H6" stroke="white" stroke-width="2" stroke-linecap="round"/>
             </svg>
-            <a href="https://cdn.jsdelivr.net/gh/xuhuanxxx/network-rules@release/${item.name}" target="_blank" class="file-name ${visitedClass}" onclick="markVisited(this);">
+            <a href="https://cdn.jsdelivr.net/gh/${repoName}@release/${item.name}" target="_blank" class="file-name ${visitedClass}" onclick="markVisited(this);">
               ${item.name}
             </a>
           </td>
           <td>${item.lines}</td>
-          <td>${convertToUTC8(item.modified)}</td>
+          <td>${formatDate(item.modified)}</td>
         `;
         tableBody.appendChild(row);
       });
@@ -123,10 +123,9 @@
       link.classList.add('visited-link');
     }
 
-    function convertToUTC8(isoDate) {
+    function formatDate(isoDate) {
       const date = new Date(isoDate);
-      const utc8Date = new Date(date.getTime() + (8 * 60 * 60 * 1000)); // Adding 8 hours in milliseconds for UTC+8
-      return utc8Date.toISOString().split('T')[0] + ' ' + utc8Date.toISOString().split('T')[1].substring(0, 8);
+      return date.toLocaleString();
     }
 
     displayData(fileData);

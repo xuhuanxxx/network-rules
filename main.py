@@ -5,11 +5,12 @@ from os import environ
 from pathlib import Path
 from typing import List, Dict
 
-min_lines: int = environ.get("MIN_LINES", "1")
+min_lines_env: str = environ.get("MIN_LINES", "1")
+min_lines: int = 1
 base_attr: str = environ.get("BASE_ATTR", "")
 addon_attrs: List[str] = ["@cn", "@ads"]
 try:
-    min_lines = int(min_lines)
+    min_lines = int(min_lines_env)
 except ValueError:
     print("‼️变量错误: MIN_LINES")
 
@@ -27,10 +28,10 @@ class Entry:
 def format_doc(file_path: Path):
     result: List[str] = []
     try:
-        with file_path.open("r") as file:
+        with file_path.open("r", encoding="utf-8") as file:
             content = file.read()
         no_hash = re.sub(r'#.*', '', content)
-        no_space = re.sub(r'\x20+', '', no_hash)
+        no_space = re.sub(r'[ \t]+', '', no_hash)
         result = re.findall(r'\S.*', no_space)
     except FileNotFoundError:
         print(f"⚠️未知文件: {file_path.name}")
@@ -102,8 +103,10 @@ class DocumentProcessor:
                         page.sort()
                         if attr == base_attr:
                             result = page
+                        if not page:
+                            continue
                         page_file = release_dir / f"{name}{attr}.txt"
-                        with page_file.open("w") as file:
+                        with page_file.open("w", encoding="utf-8") as file:
                             file.write(f"# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/{name}\n\n")
                             file.writelines(page)
                     processed.update({name: result})
