@@ -40,6 +40,12 @@ jobs:
       - name: Generate
         run: python3 main.py domain-list-community/data release
 
+      - name: List Release Files
+        run: |
+          echo "Listing files in release directory:"
+          ls -la release/
+          echo "Count: $(ls -1 release/*.txt 2>/dev/null | wc -l)"
+
       - name: Get Commit Message
         id: message
         uses: actions/github-script@v3
@@ -72,15 +78,24 @@ jobs:
           echo "const repoName = '${{ github.repository }}';" > src/fileList.js
           echo "const fileData = [" >> src/fileList.js
 
-          for file in release/*.txt; do
-            fileName=$(basename $file)
-            fileLines=$(grep -vE '^\s*#|^$' $file | wc -l)
+          shopt -s nullglob
+          files=(release/*.txt)
+          echo "Found ${#files[@]} files to list."
 
-            echo "{ name: '$fileName', modified: '$(date -u -r $file --iso-8601=seconds)', lines: $fileLines }," >> src/fileList.js
+          for file in "${files[@]}"; do
+            fileName=$(basename "$file")
+            fileLines=$(grep -vE '^\s*#|^$' "$file" | wc -l)
+            # Use date -u -r which is usually available on ubuntu-latest
+            modified=$(date -u -r "$file" --iso-8601=seconds 2>/dev/null || date -u --iso-8601=seconds)
+            
+            echo "{ name: '$fileName', modified: '$modified', lines: $fileLines }," >> src/fileList.js
+            echo "Added $fileName"
           done
 
           echo "];" >> src/fileList.js
           cp index.html src/index.html
+          echo "Generated src/fileList.js content:"
+          cat src/fileList.js
 
       - name: Deploy File List Github Page
         uses: peaceiris/actions-gh-pages@v3

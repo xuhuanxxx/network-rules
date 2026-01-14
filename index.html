@@ -1,96 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Rules</title>
-    <style>
-        body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          background-color: white;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Network Rules</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      background-color: white;
+    }
 
-        h1 {
-          margin: 20px 0 10px 40px;
-        }
+    h1 {
+      margin: 20px 0 10px 40px;
+    }
 
-        #searchContainer {
-          display: flex;
-          align-items: center;
-          margin: 10px 40px;
-        }
+    #searchContainer {
+      display: flex;
+      align-items: center;
+      margin: 10px 40px;
+    }
 
-        #searchInput {
-          padding: 4px;
-          border: 1px solid #ccc;
-          border-radius: 2px;
-          margin-left: 10px;
-        }
+    #searchInput {
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      margin-left: 10px;
+    }
 
-        table {
-          border-collapse: collapse;
-          width: 100%;
-          background-color: white;
-        }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background-color: white;
+    }
 
-        th, td {
-          padding: 10px 40px;
-          text-align: left;
-          border-bottom: 1px dashed lightgrey;
-        }
+    th,
+    td {
+      padding: 10px 40px;
+      text-align: left;
+      border-bottom: 1px dashed lightgrey;
+    }
 
-        th {
-          cursor: pointer;
-        }
+    th {
+      cursor: pointer;
+    }
 
-        .visited-link {
-          color: #800080;
-          text-decoration: none;
-        }
+    .visited-link {
+      color: #800080;
+      text-decoration: none;
+    }
 
-        .file-name {
-          color: #006ed3;
-          text-decoration: none;
-          cursor: pointer;
-        }
+    .file-name {
+      color: #006ed3;
+      text-decoration: none;
+      cursor: pointer;
+    }
 
-        .file-icon {
-          width: 16px;
-          height: 16px;
-          margin-right: 5px;
-          fill: black;
-        }
+    .file-icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+      fill: black;
+    }
 
-        tbody tr:hover {
-          background-color: #ffffe0;
-        }
-    </style>
+    tbody tr:hover {
+      background-color: #ffffe0;
+    }
+  </style>
 </head>
+
 <body>
-<h1>Network Rules</h1>
-<div id="searchContainer">
+  <h1>Network Rules</h1>
+  <div id="searchContainer">
     <div>Total Files: <span id="fileCount">0</span></div>
     <input type="text" id="searchInput" placeholder=" 输入文件名搜索">
-</div>
-<table id="fileTable">
+  </div>
+  <table id="fileTable">
     <thead>
-    <tr>
+      <tr>
         <th onclick="sortTable(0)">Name</th>
         <th onclick="sortTable(1)">Lines</th>
         <th onclick="sortTable(2)">Modified</th>
-    </tr>
+      </tr>
     </thead>
     <tbody id="tableBody">
     </tbody>
-</table>
+  </table>
 
-<script src="./fileList.js"></script>
-<script>
+  <script src="./fileList.js"></script>
+  <script>
     const fileCount = document.getElementById('fileCount');
     const tableBody = document.getElementById('tableBody');
 
@@ -107,7 +110,7 @@
               <path d="M2 8H14" stroke="white" stroke-width="2" stroke-linecap="round"/>
               <path d="M2 10.5H6" stroke="white" stroke-width="2" stroke-linecap="round"/>
             </svg>
-            <a href="https://cdn.jsdelivr.net/gh/${repoName}@release/${item.name}" target="_blank" class="file-name ${visitedClass}" onclick="markVisited(this);">
+            <a href="https://cdn.jsdelivr.net/gh/${typeof repoName !== 'undefined' ? repoName : 'unknown/repo'}@release/${item.name}" target="_blank" class="file-name ${visitedClass}" onclick="markVisited(this);">
               ${item.name}
             </a>
           </td>
@@ -128,7 +131,17 @@
       return date.toLocaleString();
     }
 
-    displayData(fileData);
+    displayData(typeof fileData !== 'undefined' ? fileData : []);
+
+    if (typeof fileData === 'undefined') {
+      console.error('fileData is not defined. Make sure fileList.js is loaded correctly.');
+      tableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 20px;">Error: fileList.js could not be loaded.</td></tr>';
+    } else if (fileData.length === 0) {
+      console.warn('fileData is empty.');
+      tableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 20px;">No files found.</td></tr>';
+    } else {
+      console.log(`Loaded ${fileData.length} files.`);
+    }
 
     function sortTable(column) {
       const sortOrder = ['asc', 'desc'];
@@ -149,11 +162,12 @@
       displayData(sortedData);
     }
 
-    document.getElementById('searchInput').addEventListener('input', function() {
+    document.getElementById('searchInput').addEventListener('input', function () {
       const searchValue = this.value.toLowerCase();
       const filteredData = fileData.filter(item => item.name.toLowerCase().split('.')[0].includes(searchValue));
       displayData(filteredData);
     });
-</script>
+  </script>
 </body>
+
 </html>

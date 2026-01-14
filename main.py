@@ -124,17 +124,24 @@ def main():
     source_dir: Path = Path(args.source_dir)
     release_dir: Path = Path(args.release_dir)
 
+    print(f"📂 扫描目录: {source_dir.absolute()}")
     if not source_dir.is_dir():
-        print(f"数据目录不存在: '{source_dir}'")
+        print(f"❌ 数据目录不存在: '{source_dir}'")
         return
 
     release_dir.mkdir(parents=True, exist_ok=True)
+    count = 0
     for source_file in source_dir.glob('*'):
         if source_file.is_file() and source_file.suffix == "":
             content = format_doc(source_file)
             doc = DocumentProcessor(content, source_dir, release_dir, [source_file.stem])
             doc.process()
-    print("🎉全部完成!")
+            count += 1
+    
+    if count == 0:
+        print("⚠️ 未发现任何待处理文件")
+    else:
+        print(f"🎉 全部完成! 处理了 {count} 个文件")
 
 
 if __name__ == '__main__':
