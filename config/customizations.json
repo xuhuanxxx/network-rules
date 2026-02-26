@@ -1,0 +1,10 @@
+{
+  "exclude_includes": [
+    {
+      "from_file": "microsoft",
+      "exclude": [
+        "github"
+      ]
+    }
+  ]
+}

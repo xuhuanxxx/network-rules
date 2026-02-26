@@ -5,15 +5,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Network Rules</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='6' r='3' fill='%23006ed3'/%3E%3Ccircle cx='6' cy='16' r='3' fill='%23006ed3'/%3E%3Ccircle cx='26' cy='16' r='3' fill='%23006ed3'/%3E%3Ccircle cx='16' cy='26' r='3' fill='%23006ed3'/%3E%3Cline x1='16' y1='6' x2='6' y2='16' stroke='%23006ed3' stroke-width='2'/%3E%3Cline x1='16' y1='6' x2='26' y2='16' stroke='%23006ed3' stroke-width='2'/%3E%3Cline x1='6' y1='16' x2='16' y2='26' stroke='%23006ed3' stroke-width='2'/%3E%3Cline x1='26' y1='16' x2='16' y2='26' stroke='%23006ed3' stroke-width='2'/%3E%3C/svg%3E">
   <style>
+    :root {
+      --search-height: 46px;
+    }
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      height: 100vh;
+      overflow: hidden;
       background-color: white;
+    }
+
+    #contentScroll {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     h1 {
@@ -23,7 +38,21 @@
     #searchContainer {
       display: flex;
       align-items: center;
-      margin: 10px 40px;
+      gap: 10px;
+      margin: 0;
+      padding: 10px 40px;
+      width: 100%;
+      box-sizing: border-box;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: white;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    #searchCountLabel {
+      white-space: nowrap;
+      min-width: 12em;
     }
 
     #searchInput {
@@ -37,6 +66,7 @@
       border-collapse: collapse;
       width: 100%;
       background-color: white;
+      table-layout: fixed;
     }
 
     th,
@@ -48,6 +78,30 @@
 
     th {
       cursor: pointer;
+      white-space: nowrap;
+    }
+
+    #fileTable thead th {
+      position: sticky;
+      top: var(--search-height);
+      z-index: 99;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    #fileTable th:nth-child(1),
+    #fileTable td:nth-child(1) {
+      width: 58%;
+    }
+
+    #fileTable th:nth-child(2),
+    #fileTable td:nth-child(2) {
+      width: 12%;
+    }
+
+    #fileTable th:nth-child(3),
+    #fileTable td:nth-child(3) {
+      width: 30%;
     }
 
     .visited-link {
@@ -71,55 +125,236 @@
     tbody tr:hover {
       background-color: #ffffe0;
     }
+
+    tbody tr {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 41px;
+    }
+
+    #sentinel td {
+      padding: 0;
+      border-bottom: none;
+      height: 1px;
+    }
   </style>
 </head>
 
 <body>
-  <h1>Network Rules</h1>
-  <div id="searchContainer">
-    <div>Total Files: <span id="fileCount">0</span></div>
-    <input type="text" id="searchInput" placeholder=" 输入文件名搜索">
+  <div id="contentScroll">
+    <h1>Network Rules</h1>
+    <div id="searchContainer">
+      <div id="searchCountLabel"><span id="fileCountLabel">Total Files</span>: <span id="fileCount">0</span><span id="fileCountTotal"></span></div>
+      <input type="text" id="searchInput" placeholder=" 输入文件名搜索">
+    </div>
+    <table id="fileTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Name</th>
+          <th onclick="sortTable(1)">Lines</th>
+          <th onclick="sortTable(2)">Modified</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+      </tbody>
+    </table>
+    <div id="scrollSpacer"></div>
   </div>
-  <table id="fileTable">
-    <thead>
-      <tr>
-        <th onclick="sortTable(0)">Name</th>
-        <th onclick="sortTable(1)">Lines</th>
-        <th onclick="sortTable(2)">Modified</th>
-      </tr>
-    </thead>
-    <tbody id="tableBody">
-    </tbody>
-  </table>
 
   <script src="./fileList.js"></script>
   <script>
     const fileCount = document.getElementById('fileCount');
+    const fileCountLabel = document.getElementById('fileCountLabel');
+    const fileCountTotal = document.getElementById('fileCountTotal');
     const tableBody = document.getElementById('tableBody');
+    const contentScroll = document.getElementById('contentScroll');
+    const searchContainer = document.getElementById('searchContainer');
+    const fileTable = document.getElementById('fileTable');
+    const scrollSpacer = document.getElementById('scrollSpacer');
+    const headerCells = Array.from(document.querySelectorAll('#fileTable thead th'));
+    const BATCH_SIZE = 100;
+    const SVG_NS = 'http://www.w3.org/2000/svg';
 
-    function displayData(data) {
-      tableBody.innerHTML = '';
-      data.forEach(item => {
-        const row = document.createElement('tr');
-        const visitedClass = item.visited ? 'visited-link' : '';
-        row.innerHTML = `
-          <td>
-            <svg class="file-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="2" y="1" width="12" height="14" rx="2" fill="black"/> <!-- Change to black -->
-              <path d="M2 5.5H14" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              <path d="M2 8H14" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              <path d="M2 10.5H6" stroke="white" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <a href="https://cdn.jsdelivr.net/gh/${typeof repoName !== 'undefined' ? repoName : 'unknown/repo'}@release/${item.name}" target="_blank" class="file-name ${visitedClass}" onclick="markVisited(this);">
-              ${item.name}
-            </a>
-          </td>
-          <td>${item.lines}</td>
-          <td>${formatDate(item.modified)}</td>
-        `;
-        tableBody.appendChild(row);
-      });
-      fileCount.textContent = data.length;
+    let displayedData = [];
+    let renderedCount = 0;
+    let isLoading = false;
+    let observer = null;
+    let hasScrolledPastTitle = false;
+    let titleBottom = 0;
+
+    const sentinel = document.createElement('tr');
+    sentinel.id = 'sentinel';
+    sentinel.innerHTML = '<td colspan="3"></td>';
+
+    function measureTitleBottom() {
+      titleBottom = searchContainer ? searchContainer.offsetTop : 0;
+    }
+
+    function ensureScrollableHeight() {
+      if (!hasScrolledPastTitle) {
+        scrollSpacer.style.height = '';
+        return;
+      }
+      const tableBottom = fileTable.offsetTop + fileTable.offsetHeight;
+      const needed = contentScroll.clientHeight + titleBottom + 1;
+      const extra = needed - tableBottom;
+      scrollSpacer.style.height = extra > 0 ? extra + 'px' : '';
+    }
+
+    contentScroll.addEventListener('scroll', () => {
+      if (titleBottom > 0 && contentScroll.scrollTop >= titleBottom) {
+        hasScrolledPastTitle = true;
+      } else if (contentScroll.scrollTop <= 0) {
+        hasScrolledPastTitle = false;
+        scrollSpacer.style.height = '';
+      }
+    }, { passive: true });
+
+    function recalcHeaderMetrics() {
+      const h = searchContainer ? searchContainer.offsetHeight : 46;
+      document.documentElement.style.setProperty('--search-height', h + 'px');
+      measureTitleBottom();
+      ensureScrollableHeight();
+    }
+
+    function createFileIcon() {
+      const svg = document.createElementNS(SVG_NS, 'svg');
+      svg.setAttribute('class', 'file-icon');
+      svg.setAttribute('viewBox', '0 0 16 16');
+      svg.setAttribute('fill', 'none');
+
+      const rect = document.createElementNS(SVG_NS, 'rect');
+      rect.setAttribute('x', '2');
+      rect.setAttribute('y', '1');
+      rect.setAttribute('width', '12');
+      rect.setAttribute('height', '14');
+      rect.setAttribute('rx', '2');
+      rect.setAttribute('fill', 'black');
+
+      const path1 = document.createElementNS(SVG_NS, 'path');
+      path1.setAttribute('d', 'M2 5.5H14');
+      path1.setAttribute('stroke', 'white');
+      path1.setAttribute('stroke-width', '2');
+      path1.setAttribute('stroke-linecap', 'round');
+
+      const path2 = document.createElementNS(SVG_NS, 'path');
+      path2.setAttribute('d', 'M2 8H14');
+      path2.setAttribute('stroke', 'white');
+      path2.setAttribute('stroke-width', '2');
+      path2.setAttribute('stroke-linecap', 'round');
+
+      const path3 = document.createElementNS(SVG_NS, 'path');
+      path3.setAttribute('d', 'M2 10.5H6');
+      path3.setAttribute('stroke', 'white');
+      path3.setAttribute('stroke-width', '2');
+      path3.setAttribute('stroke-linecap', 'round');
+
+      svg.appendChild(rect);
+      svg.appendChild(path1);
+      svg.appendChild(path2);
+      svg.appendChild(path3);
+      return svg;
+    }
+
+    function createRow(item) {
+      const row = document.createElement('tr');
+      const nameCell = document.createElement('td');
+      const linesCell = document.createElement('td');
+      const modifiedCell = document.createElement('td');
+
+      const link = document.createElement('a');
+      const effectiveRepoName = typeof repoName !== 'undefined' ? repoName : 'unknown/repo';
+      link.href = `https://cdn.jsdelivr.net/gh/${effectiveRepoName}@release/${item.name}`;
+      link.target = '_blank';
+      link.className = 'file-name';
+      link.textContent = item.name;
+      if (item.visited) {
+        link.classList.add('visited-link');
+      }
+      link.addEventListener('click', () => markVisited(link));
+
+      nameCell.appendChild(createFileIcon());
+      nameCell.appendChild(link);
+      linesCell.textContent = String(item.lines);
+      modifiedCell.textContent = formatDate(item.modified);
+
+      row.appendChild(nameCell);
+      row.appendChild(linesCell);
+      row.appendChild(modifiedCell);
+      return row;
+    }
+
+    function ensureObserver() {
+      if (observer) {
+        return;
+      }
+      observer = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting && !isLoading) {
+          loadMoreRows();
+        }
+      }, { root: contentScroll, rootMargin: '300px 0px' });
+    }
+
+    function loadMoreRows() {
+      if (renderedCount >= displayedData.length || isLoading) {
+        return;
+      }
+      isLoading = true;
+      const fragment = document.createDocumentFragment();
+      const end = Math.min(renderedCount + BATCH_SIZE, displayedData.length);
+      for (let i = renderedCount; i < end; i++) {
+        fragment.appendChild(createRow(displayedData[i]));
+      }
+      tableBody.insertBefore(fragment, sentinel);
+      renderedCount = end;
+      isLoading = false;
+
+      if (renderedCount >= displayedData.length && observer) {
+        observer.unobserve(sentinel);
+      }
+    }
+
+    function resetRender(data) {
+      if (hasScrolledPastTitle) {
+        scrollSpacer.style.height = (contentScroll.clientHeight + titleBottom + 1) + 'px';
+      }
+
+      displayedData = data;
+      renderedCount = 0;
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+
+      while (tableBody.firstChild && tableBody.firstChild !== sentinel) {
+        tableBody.removeChild(tableBody.firstChild);
+      }
+      if (!tableBody.contains(sentinel)) {
+        tableBody.appendChild(sentinel);
+      }
+
+      ensureObserver();
+      loadMoreRows();
+      if (renderedCount < displayedData.length && observer) {
+        observer.observe(sentinel);
+      }
+
+      ensureScrollableHeight();
+      if (hasScrolledPastTitle && contentScroll.scrollTop < titleBottom) {
+        contentScroll.scrollTop = titleBottom;
+      }
+      // 不在此处调用 recalcHeaderMetrics，避免搜索/排序时 --search-height 跳变
+    }
+
+    function showMessage(message) {
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+      tableBody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 20px;">${message}</td></tr>`;
+      fileCountLabel.textContent = 'Total Files';
+      fileCount.textContent = '0';
+      fileCountTotal.textContent = '';
     }
 
     function markVisited(link) {
@@ -131,42 +366,99 @@
       return date.toLocaleString();
     }
 
-    displayData(typeof fileData !== 'undefined' ? fileData : []);
+    let searchTerm = '';
+    let sortColumn = -1;
+    let sortDir = 'asc';
+    let totalFiles = 0;
+
+    function compareItems(a, b, column) {
+      if (column === 0) {
+        return a.name.localeCompare(b.name);
+      }
+      if (column === 1) {
+        return a.lines - b.lines;
+      }
+      if (column === 2) {
+        return a.modified.localeCompare(b.modified);
+      }
+      return 0;
+    }
+
+    function updateCountDisplay(filteredCount) {
+      if (!searchTerm) {
+        fileCountLabel.textContent = 'Total Files';
+        fileCount.textContent = String(totalFiles);
+        fileCountTotal.textContent = '';
+        return;
+      }
+      fileCountLabel.textContent = 'Showing';
+      fileCount.textContent = String(filteredCount);
+      fileCountTotal.textContent = ` / ${totalFiles}`;
+    }
+
+    function updateSortHeaders() {
+      const headerLabels = ['Name', 'Lines', 'Modified'];
+      for (let i = 0; i < headerCells.length; i++) {
+        if (i === sortColumn) {
+          const arrow = sortDir === 'asc' ? '▲' : '▼';
+          headerCells[i].textContent = `${headerLabels[i]} ${arrow}`;
+        } else {
+          headerCells[i].textContent = headerLabels[i];
+        }
+      }
+    }
+
+    function applyFilters() {
+      let result = fileData.slice();
+      if (searchTerm) {
+        result = result.filter((item) => item.name.toLowerCase().split('.')[0].includes(searchTerm));
+      }
+      if (sortColumn >= 0) {
+        const sortFactor = sortDir === 'asc' ? 1 : -1;
+        result.sort((a, b) => compareItems(a, b, sortColumn) * sortFactor);
+      }
+      updateCountDisplay(result.length);
+      updateSortHeaders();
+      resetRender(result);
+    }
 
     if (typeof fileData === 'undefined') {
       console.error('fileData is not defined. Make sure fileList.js is loaded correctly.');
-      tableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 20px;">Error: fileList.js could not be loaded.</td></tr>';
+      showMessage('Error: fileList.js could not be loaded.');
     } else if (fileData.length === 0) {
       console.warn('fileData is empty.');
-      tableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 20px;">No files found.</td></tr>';
+      totalFiles = 0;
+      updateCountDisplay(0);
+      updateSortHeaders();
+      showMessage('No files found.');
     } else {
       console.log(`Loaded ${fileData.length} files.`);
+      totalFiles = fileData.length;
+      applyFilters();
     }
 
     function sortTable(column) {
-      const sortOrder = ['asc', 'desc'];
-      const currentOrder = tableBody.getAttribute('data-order') || 'asc';
-      const nextOrder = sortOrder[(sortOrder.indexOf(currentOrder) + 1) % 2];
-      tableBody.setAttribute('data-order', nextOrder);
-
-      const sortedData = fileData.slice().sort((a, b) => {
-        if (column === 0) {
-          return a.name.localeCompare(b.name) * (nextOrder === 'asc' ? 1 : -1);
-        } else if (column === 1) {
-          return (a.lines - b.lines) * (nextOrder === 'asc' ? 1 : -1);
-        } else if (column === 2) {
-          return a.modified.localeCompare(b.modified) * (nextOrder === 'asc' ? 1 : -1);
-        }
-      });
-
-      displayData(sortedData);
+      if (sortColumn === column) {
+        sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortColumn = column;
+        sortDir = 'asc';
+      }
+      applyFilters();
     }
 
     document.getElementById('searchInput').addEventListener('input', function () {
-      const searchValue = this.value.toLowerCase();
-      const filteredData = fileData.filter(item => item.name.toLowerCase().split('.')[0].includes(searchValue));
-      displayData(filteredData);
+      let inputValue = this.value;
+      if (inputValue === undefined || inputValue === null || inputValue === 'undefined') {
+        inputValue = '';
+        this.value = '';
+      }
+      searchTerm = String(inputValue).toLowerCase().trim();
+      applyFilters();
     });
+
+    window.addEventListener('resize', recalcHeaderMetrics);
+    recalcHeaderMetrics();
   </script>
 </body>
 

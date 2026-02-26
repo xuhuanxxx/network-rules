@@ -1,0 +1,10 @@
+{
+  "cn": {
+    "pos": true,
+    "neg": true
+  },
+  "ads": {
+    "pos": true,
+    "neg": true
+  }
+}

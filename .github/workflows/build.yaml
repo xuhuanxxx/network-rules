@@ -15,30 +15,33 @@ jobs:
 
     env:
       MIN_LINES: "1"
-      BASE_ATTR: ""
+      TAG_POLICY_FILE: "config/tag_policies.json"
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Checkout data source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: v2fly/domain-list-community
           path: domain-list-community
 
       - name: Set up Python 3.9
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: 3.9
 
-      - name: Customizations
+      - name: Apply Customizations
+        run: python3 -m src.customizations domain-list-community/data
+
+      - name: Validate Tag Policy
         run: |
-          # remove `github` from `microsoft`
-          sed -i '/include:github/d' domain-list-community/data/microsoft
+          test -f "$TAG_POLICY_FILE"
+          python3 -m json.tool "$TAG_POLICY_FILE" >/dev/null
 
       - name: Generate
-        run: python3 main.py domain-list-community/data release
+        run: python3 -m src.main domain-list-community/data release
 
       - name: List Release Files
         run: |
@@ -48,7 +51,7 @@ jobs:
 
       - name: Get Commit Message
         id: message
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         env:
           FULL_COMMIT_MESSAGE: "${{ github.event.head_commit.message }}"
         with:
@@ -62,7 +65,7 @@ jobs:
             return `Generate at ${time}`;
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: release
@@ -72,37 +75,15 @@ jobs:
           full_commit_message: ${{ steps.message.outputs.result }}
           force_orphan: true
 
-      - name: Generate File List
-        run: |
-          mkdir -p src
-          echo "const repoName = '${{ github.repository }}';" > src/fileList.js
-          echo "const fileData = [" >> src/fileList.js
-
-          shopt -s nullglob
-          files=(release/*.txt)
-          echo "Found ${#files[@]} files to list."
-
-          for file in "${files[@]}"; do
-            fileName=$(basename "$file")
-            fileLines=$(grep -vE '^\s*#|^$' "$file" | wc -l)
-            # Use date -u -r which is usually available on ubuntu-latest
-            modified=$(date -u -r "$file" --iso-8601=seconds 2>/dev/null || date -u --iso-8601=seconds)
-            
-            echo "{ name: '$fileName', modified: '$modified', lines: $fileLines }," >> src/fileList.js
-            echo "Added $fileName"
-          done
-
-          echo "];" >> src/fileList.js
-          cp index.html src/index.html
-          echo "Generated src/fileList.js content:"
-          cat src/fileList.js
+      - name: Generate File List Page
+        run: python3 -m src.generate_filelist release pages --repo-name ${{ github.repository }}
 
       - name: Deploy File List Github Page
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ./src
+          publish_dir: ./pages
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
           full_commit_message: ${{ steps.message.outputs.result }}
