@@ -1,0 +1,24 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/category-ads-all
+
+.1rx.io
+.7box.vip
+.ad-delivery.net
+.adcolony.com
+.adinplay.com
+.adnxs.com
+.ads.trafficjunky.net
+.advertserve.com
+.adview.cn
+.casalemedia.com
+.contextual.media.net
+.cpmstar.com
+.demdex.net
+.httpool.com
+.lijit.com
+.mfadsrvr.com
+.mgid.com
+.ns1p.net
+.sigmob.com
+.spotxchange.com
+.unimhk.com
+.upapi.net

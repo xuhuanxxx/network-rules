@@ -1,0 +1,5 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/msn
+
+.browser.events.data.msn.cn
+.microsoftnews.cn
+.msn.cn

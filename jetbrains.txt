@@ -1,0 +1,15 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/jetbrains
+
+.cdn.jetbrains.com
+.datalore.io
+.download-cdn.jetbrains.com.cn
+.intellij.com
+.intellij.net
+.intellij.org
+.jb.gg
+.jetbrains.com
+.jetbrains.net
+.jetbrains.space
+.jetbrains.team
+.kotlinlang.org
+.youtrack.cloud

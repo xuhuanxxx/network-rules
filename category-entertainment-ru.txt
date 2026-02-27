@@ -1,0 +1,23 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/category-entertainment-ru
+
+.24h.tv
+.amediateka.ru
+.cdnvideo.ru
+.ivi.ru
+.kinopoisk-ru.clstorage.net
+.kinopoisk.ru
+.kinorium.com
+.okko.sport
+.okko.tv
+.playfamily.ru
+.premier.one
+.restream-media.net
+.rtbcdn.ru
+.rutube.ru
+.rutubelist.ru
+.smotreshka.tv
+.start.ru
+.trbcdn.net
+.tvigle.ru
+.viju.ru
+.wink.ru

@@ -1,0 +1,16 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/connectivity-check
+
+.captive.apple.com
+.connectivitycheck.gstatic.com
+.cp.cloudflare.com
+.detectportal.firefox.com
+.msftconnecttest.com
+.msftncsi.com
+.network-test.debian.org
+.networkcheck.kde.org
+connect.rom.miui.com
+connectivity-check.ubuntu.com
+connectivitycheck.platform.hicloud.com
+connectivitycheck.platform.hihonorcloud.com
+ping.archlinux.org
+redirect.archlinux.org

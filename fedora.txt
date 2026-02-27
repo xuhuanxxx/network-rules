@@ -1,0 +1,7 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/fedora
+
+.fedoraforum.org
+.fedoramagazine.org
+.fedorapeople.org
+.fedoraproject.org
+.getfedora.org

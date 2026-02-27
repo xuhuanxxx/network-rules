@@ -1,0 +1,9 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/pinduoduo
+
+.pddcdn.com
+.pddim.com
+.pddpic.com
+.pddugc.com
+.pinduoduo.com
+.pinduoduo.net
+.yangkeduo.com

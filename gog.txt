@@ -1,0 +1,15 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/gog
+
+.gog-statics.com
+.gog.com
+gog-cdn-fastly.gog.com
+gog-cdn.akamaized.net
+gog.qtlglb.com
+gogalaxy.gog-statics.com
+menu-static.gog-statics.com
+productcard.gog-statics.com
+regexp:^cdn-akamai-.+\.gog-services\.com$@cn
+regexp:^gog-cdn-.+\.footprint\.net$@cn
+regexp:^images(-\d)?\.gog-statics\.com$@cn
+static-login.gog-statics.com
+www4-static.gog-statics.com

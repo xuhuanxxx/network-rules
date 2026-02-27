@@ -1,0 +1,6 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/bilibili2
+
+.bili2.cc
+.bili888.com
+.bili999.com
+regexp:(^|\.)bilibili3(0[1-9]|1[0-2])\.xyz$

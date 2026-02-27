@@ -1,0 +1,26 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/alibaba
+
+.a.alimama.cn
+.adash-c.m.taobao.com
+.adash-c.ut.taobao.com
+.adash.m.taobao.com
+.adashbc.m.taobao.com
+.adashbc.ut.taobao.com
+.adashx.m.taobao.com
+.adashx4ae.ut.taobao.com
+.adashx4yt.m.taobao.com
+.adashxgc.ut.taobao.com
+.adsh.m.taobao.com
+.adtrack.quark.cn
+.c-adash.m.taobao.com
+.fourier.taobao.com
+.g.click.taobao.com
+.h-adashx.ut.taobao.com
+.h-adashx4yt.ut.taobao.com
+.m-adash.m.taobao.com
+.marketing.alibaba.com
+.nbsdk-baichuan.taobao.com
+.retcode.taobao.com
+.tns.simba.taobao.com
+.track.lc.quark.cn
+.v6-adashx.ut.taobao.com

@@ -1,0 +1,9 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/yokaverse
+
+.dobest.com
+.langrenclub.com
+.sanguosha.com
+.xhlsgs.com
+.xinwuji.com
+.yokaverse.com
+.zhuoyou.com

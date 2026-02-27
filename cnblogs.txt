@@ -1,0 +1,9 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/cnblogs
+
+.blogjava.net
+.cnblogs.com
+.cnitblog.com
+.cnweblog.com
+.cppblog.com
+.phpweblog.net
+.teachblog.net

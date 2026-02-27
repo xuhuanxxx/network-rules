@@ -1,0 +1,6 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/barrons
+
+.barrons-advisor.com
+.barrons-conferences.com
+.barrons.com
+.wsjbarrons.com
