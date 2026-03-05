@@ -1,0 +1,11 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/ngrok
+
+.ngrok-free.app
+.ngrok-free.dev
+.ngrok-free.pizza
+.ngrok.app
+.ngrok.com
+.ngrok.dev
+.ngrok.io
+.ngrok.pizza
+.ngrok.pro
