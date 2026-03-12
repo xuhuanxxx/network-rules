@@ -1,0 +1,7 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/ok
+
+.mycdn.me
+.ok.ru
+.okcdn.ru
+st-ok-pts.cdn-vk.ru
+st-ok.cdn-vk.ru

@@ -1,0 +1,9 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/icloud
+
+.apple-icloud.cn
+.appleicloud.cn
+.icloud-apple.cn
+.icloud.cn
+.icloud.com.cn
+.icloud.net.cn
+.icloudapple.cn

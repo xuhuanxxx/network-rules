@@ -1,0 +1,23 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/mozilla
+
+.bugzilla.org
+.developer.allizom.org
+.developer.mozilla.org
+.extensionworkshop.com
+.firefox.com
+.firefoxusercontent.com
+.getpocket.com
+.mdn.allizom.net
+.mdn.dev
+.mdn.mozilla.net
+.mdn.mozit.cloud
+.mdnplay.dev
+.mdnyalp.dev
+.mozgcp.net
+.mozilla.com
+.mozilla.community
+.mozilla.net
+.mozilla.org
+.seamonkey-project.org
+.thunderbird.net
+mdn.mozillademos.org
