@@ -1,0 +1,13 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/eleme
+
+.adashx.ut.ele.me
+.doservice.com
+.ele.me
+.ele.to
+.eleme.cn
+.eleme.io
+.elemecdn.cn
+.elemecdn.com
+.elenet.me
+.h-adashx.ut.ele.me
+.v6-adashx.ut.ele.me

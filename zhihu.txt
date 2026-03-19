@@ -1,0 +1,6 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/zhihu
+
+.crash2.zhihu.com
+.zhihu-web-analytics.zhihu.com
+.zhihu.com
+.zhimg.com
