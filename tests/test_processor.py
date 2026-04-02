@@ -69,7 +69,7 @@ class TestDocumentProcessor:
         
         assert "keyword:google\n" in doc.result
     
-    def test_regexp(self, tmp_path):
+    def test_regexp_is_ignored(self, tmp_path):
         source_dir = tmp_path / "source"
         source_dir.mkdir()
         release_dir = tmp_path / "release"
@@ -85,8 +85,31 @@ class TestDocumentProcessor:
             content, source_dir, release_dir, ["test"], processed
         )
         doc.process()
-        
-        assert "regexp:^google.*\n" in doc.result
+
+        assert doc.result == []
+        assert doc.entries == []
+        assert not (release_dir / "test.txt").exists()
+
+    def test_regexp_with_attr_does_not_generate_tag_file(self, tmp_path):
+        source_dir = tmp_path / "source"
+        source_dir.mkdir()
+        release_dir = tmp_path / "release"
+        release_dir.mkdir()
+
+        test_file = source_dir / "test"
+        test_file.write_text("regexp:^google.* @ads")
+
+        content = format_doc(test_file)
+        processed = {}
+
+        doc = DocumentProcessor(
+            content, source_dir, release_dir, ["test"], processed,
+            tag_policies=DEFAULT_POLICIES
+        )
+        doc.process()
+
+        assert doc.result == []
+        assert not (release_dir / "test@ads.txt").exists()
     
     def test_include(self, tmp_path):
         source_dir = tmp_path / "source"

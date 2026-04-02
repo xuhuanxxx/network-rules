@@ -53,6 +53,8 @@ class DocumentProcessor:
 
         for line in content:
             type_prefix, value, pos_attrs, neg_attrs = format_line(line)
+            if type_prefix == "regexp":
+                continue
             if type_prefix == "include":
                 entry = Entry(
                     type=type_prefix,
@@ -77,8 +79,6 @@ class DocumentProcessor:
             elif type_prefix == "domain":
                 entry.data = [entry_to_domain(entry)]
             elif type_prefix == "keyword":
-                entry.data = [entry_to_domain(entry)]
-            elif type_prefix == "regexp":
                 entry.data = [entry_to_domain(entry)]
             elif type_prefix == "include":
                 sub_source_file: Path = source_dir / value
