@@ -1,0 +1,7 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/okjike
+
+.jike.city
+.jikecdn.com
+.okjike.com
+.okjk.co
+.ruguoapp.com
