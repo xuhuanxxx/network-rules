@@ -1,0 +1,15 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/le
+
+.apple.www.letv.com
+.ark.letv.com
+.dc.letv.com
+.g3.letv.com
+.le.com
+.leautolink.com
+.lecloud.com
+.lecloudapi.com
+.lemall.com
+.leso.cn
+.letv.com
+.letvcdn.com
+.letvimg.com

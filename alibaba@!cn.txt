@@ -1,0 +1,12 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/alibaba
+
+.ae-rus.net
+.aedns.ru
+.aeplatform.ru
+.aestatic.net
+.aliexpress.ru
+.alihealth.hk
+.alipay.hk
+.alipaymo.com
+.fliggy.hk
+.tmall.ru
