@@ -1,0 +1,8 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/bytedance
+
+.byteglb.com
+.byteoversea.com
+.byteoversea.net
+.ibytedtos.com
+.ibyteimg.com
+bytedance.map.fastly.net

@@ -1,0 +1,6 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/taylorfrancis
+
+.tandf.co.uk
+.tandfonline.com
+.taylorandfrancis.com
+.taylorfrancis.com

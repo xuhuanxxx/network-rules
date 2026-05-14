@@ -1,0 +1,7 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/8btc
+
+.8btc.com
+.bystack.com
+.chainnode.com
+.matpool.com
+.matpool.net

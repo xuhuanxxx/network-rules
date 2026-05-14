@@ -1,0 +1,6 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/mailcom
+
+.mail.com
+.ui-portal.de
+.uicdn.com
+.uimserv.net

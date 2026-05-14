@@ -1,0 +1,6 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/category-media-ru
+
+.rteam.tech
+.russiatoday.com
+.shop-rt.com
+.swentr.site

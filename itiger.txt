@@ -1,0 +1,6 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/itiger
+
+.itiger.com
+.itigergrowth.com
+.itigergrowtha.com
+.itigerup.com

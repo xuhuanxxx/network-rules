@@ -1,0 +1,6 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/adjust
+
+.adjust.com
+.adjust.io
+.adjust.net.in
+.adjust.world

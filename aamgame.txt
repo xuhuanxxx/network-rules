@@ -1,0 +1,7 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/aamgame
+
+.aamgame.com
+.aamgame.mobi
+.aamgame.net
+.aamsmart.com
+.singworld.net
