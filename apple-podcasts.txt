@@ -1,0 +1,6 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/apple-podcasts
+
+.applepodcasts.com
+.podcasts.apple.com
+amp-api.podcasts.apple.com
+podcasts.apple.com

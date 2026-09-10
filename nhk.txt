@@ -1,0 +1,6 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/nhk
+
+.nhk
+.nhk.jp
+.nhk.or.jp
+.nhkworld.jp
