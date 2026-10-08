@@ -1,0 +1,7 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/oan
+
+.aweencore.com
+.awetv.com
+.herringnetwork.com
+.oanencore.com
+.oann.com

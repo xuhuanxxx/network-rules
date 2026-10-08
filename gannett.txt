@@ -1,0 +1,7 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/gannett
+
+.gannett-cdn.com
+.gannett.com
+.gannettdigital.com
+.usatoday.com
+.usatodaynetworkservice.com

@@ -1,0 +1,7 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/xnxx
+
+.xnxx-cdn.com
+.xnxx.com
+.xnxx.net
+.xnxx.tv
+.xnxx3.com

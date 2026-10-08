@@ -1,0 +1,10 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/seasun
+
+.cbjq.com
+.seasungames.cn
+.seasungames.com
+.seasunwbl.com
+.testplus.cn
+.xishanju.com
+.xoyo.com
+.xoyocdn.com
