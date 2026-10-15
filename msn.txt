@@ -1,0 +1,23 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/msn
+
+.browser.events.data.msn.cn
+.browser.events.data.msn.com
+.microsoftnews.cc
+.microsoftnews.cn
+.microsoftnews.com
+.microsoftnews.net
+.microsoftnews.org
+.microsoftnewsforkids.com
+.microsoftnewsforkids.net
+.microsoftnewsforkids.org
+.microsoftnewskids.com
+.microsoftnewskids.net
+.microsoftnewskids.org
+.microsoftstart.com
+.msn.cn
+.msn.com
+.msnewskids.com
+.msnewskids.net
+.msnewskids.org
+.msnkids.com
+.start.com

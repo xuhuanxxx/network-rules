@@ -1,0 +1,4 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/chinamobile
+
+.speedtest.hk.chinamobile.com
+.speedtestbb.hk.chinamobile.com

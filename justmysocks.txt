@@ -1,0 +1,6 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/justmysocks
+
+.justmysocks.net
+.justmysocks1.net
+.justmysocks2.net
+.justmysocks4.net

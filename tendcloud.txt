@@ -1,0 +1,7 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/tendcloud
+
+.cpatrk.net
+.talkingdata.com
+.talkinggame.com
+.tdsdk.cpatrk.net
+.tendcloud.com
