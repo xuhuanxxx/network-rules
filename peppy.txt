@@ -1,0 +1,12 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/peppy
+
+.ppy.sh
+a.ppy.sh
+assets.ppy.sh
+c.ppy.sh
+lazer.ppy.sh
+m1.ppy.sh
+notify.ppy.sh
+osu.ppy.sh
+sentry.ppy.sh
+spectator.ppy.sh

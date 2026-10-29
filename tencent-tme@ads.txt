@@ -1,0 +1,9 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/tencent-tme
+
+.ad.tencentmusic.com
+.adstats.tencentmusic.com
+.monitor.music.qq.com
+.report.tencentmusic.com
+.stat.y.qq.com
+.tmead.y.qq.com
+.tmeadcomm.y.qq.com

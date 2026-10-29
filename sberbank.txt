@@ -1,0 +1,20 @@
+# 来源: https://github.com/v2fly/domain-list-community/tree/master/data/sberbank
+
+.ads.sber.ru
+.bps-sberbank.by
+.clickstream.sberbank.ru
+.cplsb.ru
+.sber-bank.by
+.sber.ru
+.sberbank.com
+.sberbank.ru
+.sberspasibo.ru
+.sbrf.ru
+.spasibo.digital
+.spasibo.market
+.spasibobonus.ru
+.spasibosb.ru
+.spasibosberbank.ru
+.yookassa.ru
+.yoomoney.ru
+visor.sberbank.ru
